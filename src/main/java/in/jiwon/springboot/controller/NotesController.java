@@ -2,6 +2,7 @@ package in.jiwon.springboot.controller;
 
 import in.jiwon.springboot.entity.Note;
 import in.jiwon.springboot.repository.NotesRepository;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,11 @@ public class NotesController {
     @GetMapping("/notes/{id}")
     public ResponseEntity<Note> readNote (@PathVariable Long id) {
         return new ResponseEntity<Note>(nRepo.findById(id).get(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/notes/{id}")
+    public ResponseEntity<HttpStatus> deleteNote (@PathVariable Long id) {
+        nRepo.deleteById(id);
+        return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
     }
 }
